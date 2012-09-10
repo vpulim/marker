@@ -1,0 +1,12 @@
+/* CSS declarations go here */
+
+article {
+    font-family: 'Cousine', sans-serif;
+    font-size: 24px;
+    color: #424242;
+    padding: 40px;
+}
+
+p {
+    margin: 0px;
+}
