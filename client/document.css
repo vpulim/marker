@@ -5,8 +5,15 @@ article {
     font-size: 24px;
     color: #424242;
     padding: 40px;
+    padding-left: 80px;
 }
 
 p {
     margin: 0px;
+}
+
+p.h1 {
+	position: relative;
+	left: -29px;
+	font-weight: bold;
 }
