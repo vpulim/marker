@@ -1,15 +1,25 @@
 /* CSS declarations go here */
 
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
 article {
+    min-height: 100%;
     font-family: 'Cousine', sans-serif;
     font-size: 24px;
     color: #424242;
     padding: 40px;
     padding-left: 80px;
+    outline: 0px solid transparent;
+    background-image:url('/backgroundPattern.png');
 }
 
 p {
     margin: 0px;
+    margin-bottom: 10px;
 }
 
 p.h1 {
@@ -33,4 +43,15 @@ p.h3 {
 p.ol {
     position: relative;
     left: -28px;
+}
+
+p em {
+    font-style: normal;
+    text-decoration: underline;
+}
+
+p strong {
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
 }

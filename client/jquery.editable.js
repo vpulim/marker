@@ -67,25 +67,37 @@
     }
 
     function formatCurrentParagraph() {
+        var selection = window.getSelection();
+
+        if (!selection.isCollapsed) return;
+
         var cursor = getCursor(),
             position = cursor.position,
             p = cursor.paragraph,
             $p = $(p),
             text = $p.text();
-        console.log(text);
         $p.removeAttr('class');
+        text = $('<div>').text(text).html()
         _.each(re, function(regex, clas) {
             if (regex.exec(text)) {
                 $p.addClass(clas)
             }
         })
-        text = text.replace(/\*\*([^\*]+?)\*\*/g, '<strong>**$1**</strong>')
-        text = text.replace(/([^\*])\*([^\*]+?)\*/g, '$1<em>*$2*</em>')
+        if (text.match(/\*\*([^\*]+?)\*\*/)) {
+            text = text.replace(/\*\*([^\*]+?)\*\*/g, '**<strong>$1</strong>**')
+        }
+        else {
+            text = text.replace(/\*([^\*]+?)\*/g, '*<em>$1</em>*')
+        }
         if (!text) text = '<br>'
         $p.html(text);
-        selection = window.getSelection();
+        var range = rangeForPosition(p, position);
+        if (!range) {
+            range = document.createRange(); 
+            range.setStart(p, 0);
+            range.setEnd(p, 0);            
+        }
         selection.removeAllRanges();
-        var range = rangeForPosition(p, position)
         selection.addRange(range);
     }
 
@@ -117,14 +129,11 @@
 
         $this.on('paste', function(e) {
             doPaste(e.originalEvent.clipboardData.getData('Text'));
-            // formatCurrentParagraph();
+            formatCurrentParagraph();
             e.preventDefault();
         });
 
-        $this.on('keyup', function(e) {
-            console.log(String.fromCharCode(e.which))
-            console.log(e)
-            console.log(e.originalEvent)
+        $this.on('keypress', function(e) {
             formatCurrentParagraph();
         });
     };
